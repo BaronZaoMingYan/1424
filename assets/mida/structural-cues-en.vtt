@@ -1,0 +1,65 @@
+WEBVTT
+
+1
+00:00:00.000 --> 00:00:03.214
+One glass can provide different structural cues in RGB and thermal.
+
+2
+00:00:03.214 --> 00:00:06.964
+Visible light from the background enters and passes through the glass.
+
+3
+00:00:06.964 --> 00:00:11.786
+The RGB camera can receive background information through the glass walls.
+
+4
+00:00:11.786 --> 00:00:13.929
+In long-wave thermal imaging, the glass has a different structural response.
+
+5
+00:00:13.929 --> 00:00:20.357
+The thermal camera mainly receives cues from the glass surface.
+
+6
+00:00:20.357 --> 00:00:25.714
+Background cues and glass-surface cues describe different physical depths.
+
+7
+00:00:25.714 --> 00:00:30.000
+These conflicting geometric cues make RGB–thermal alignment ambiguous.
+
+8
+00:00:30.000 --> 00:00:35.000
+RGB and thermal images provide two separate reconstruction inputs.
+
+9
+00:00:35.000 --> 00:00:40.000
+RGB reconstruction recovers cup edges and the background seen through the glass.
+
+10
+00:00:40.000 --> 00:00:45.000
+Thermal reconstruction recovers the glass surface as orange points.
+
+11
+00:00:45.000 --> 00:00:50.000
+The blue RGB cloud contains background geometry behind the cup.
+
+12
+00:00:50.000 --> 00:00:54.000
+RGB background information is transferred into the thermal estimate.
+
+13
+00:00:54.000 --> 00:01:02.000
+Some orange surface points gradually turn red and move away from the cup surface.
+
+14
+00:01:02.000 --> 00:01:10.000
+The affected points drift toward background depth, producing incorrect thermal geometry.
+
+15
+00:01:10.000 --> 00:01:16.000
+RGB background geometry and thermal surface geometry describe different structures.
+
+16
+00:01:16.000 --> 00:01:20.000
+This interference motivates task-relevant RGB–thermal alignment.
