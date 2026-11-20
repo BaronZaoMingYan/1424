@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="description" content="MIDA: Mutual Information-Guided Discriminative Alignment for RGB–Thermal 3D Reconstruction with Conflicting Structural Cues. Anonymous supplementary material.">
+    <meta name="description" content="MIDA uses mutual information to select features for camera pose and depth estimation when RGB and thermal views yield conflicting depth estimates.">
     <meta name="robots" content="noindex, nofollow, noarchive">
     <meta name="referrer" content="no-referrer">
     <meta name="color-scheme" content="dark">
@@ -46,12 +46,11 @@
             </svg>
             <h1 class="title-glitch">MIDA</h1>
         </div>
-        <p class="subtitle">Mutual Information-Guided Discriminative Alignment for RGB–Thermal 3D Reconstruction with Conflicting Structural Cues</p>
+        <p class="subtitle">Mutual Information-Guided Discriminative Alignment for RGB–Thermal 3D Reconstruction with Conflicting Depth Estimates</p>
         <div class="conference-badge">CVPR · Anonymous 1424 Submission</div>
         <nav class="button-group" aria-label="Paper sections">
             <a href="#video" class="btn">Motivation</a>
             <a href="#abstract" class="btn">Abstract</a>
-            <a href="#method" class="btn">Method</a>
             <a href="#qualitative" class="btn">Results</a>
         </nav>
     </header>
@@ -59,7 +58,7 @@
     <main class="container" id="main">
         <section class="glass-card" id="video" aria-labelledby="video-title">
             <h2 id="video-title"><span class="section-index">01</span>Motivation Animation</h2>
-            <p>A visual explanation of how RGB background cues and thermal surface cues can describe different physical depths.</p>
+            <p>The animation shows how differences in the way a material appears in RGB and thermal images can lead to conflicting depth estimates for the same object.</p>
             <div class="video-frame">
                 <video autoplay muted controls playsinline preload="auto" poster="assets/mida/structural-cues-poster.webp" aria-label="Animation explaining conflicting RGB and thermal structural cues">
                     <source src="assets/mida/mida_motivation_rgb_thermal_reconstruction.mp4" type="video/mp4">
@@ -73,70 +72,53 @@
         <section class="glass-card" id="abstract" aria-labelledby="abstract-title">
             <h2 id="abstract-title"><span class="section-index">02</span>Abstract</h2>
             <div class="abstract-content">
-                <p>The same object can exhibit <span class="highlight-term">different structural responses in RGB and thermal images</span>. These differences introduce conflicting geometric cues and make feed-forward RGB–thermal 3D reconstruction difficult. Enforcing feature consistency under geometric supervision alone can prioritize RGB reconstruction at the expense of thermal reconstruction.</p>
-                <p>We introduce <span class="highlight-badge">MIDA</span>, a Mutual Information-Guided RGB–Thermal Discriminative Alignment framework. Its <span class="highlight-term">coarse-to-fine alignment</span> first uses regional context to select cross-modal features, then refines this selection with fine-grained masked attention. A mutual information-based objective provides explicit feature-level supervision, helping each reconstruction branch retain useful information and separate it from interference.</p>
-                <p>Experiments on <strong>ViViD++, STheReO, SEAR-Data-I, and SEAR-Data-II</strong> evaluate depth and camera pose estimation for both modalities under paired and unpaired RGB-T inputs.</p>
-            </div>
-            <div class="features-grid">
-                <div class="feature-item"><div class="feature-icon" aria-hidden="true">CR</div><div class="feature-text"><span class="feature-title">Coarse-Region Alignment</span><span class="feature-desc">Select regional cross-modal cues</span></div></div>
-                <div class="feature-item"><div class="feature-icon" aria-hidden="true">FM</div><div class="feature-text"><span class="feature-title">Fine-Mask Alignment</span><span class="feature-desc">Refine token-level selection</span></div></div>
-                <div class="feature-item"><div class="feature-icon" aria-hidden="true">MI</div><div class="feature-text"><span class="feature-title">Mutual Information</span><span class="feature-desc">Separate useful cues from interference</span></div></div>
-                <div class="feature-item"><div class="feature-icon" aria-hidden="true">3D</div><div class="feature-text"><span class="feature-title">RGB &amp; Thermal</span><span class="feature-desc">Depth and camera pose for both</span></div></div>
-            </div>
-        </section>
-
-        <section class="glass-card" id="motivation" aria-labelledby="motivation-title">
-            <h2 id="motivation-title"><span class="section-index">03</span>Conflicting Structural Cues</h2>
-            <p>Glass can be transparent in RGB images and opaque in long-wave thermal images. An RGB observation may contain background geometry seen through the glass, while the thermal observation captures its surface. Aligning these responses without distinguishing their roles can introduce errors into either reconstruction branch.</p>
-            <figure class="paper-figure">
-                <a class="figure-link" href="assets/mida/motivation.webp" target="_blank" rel="noreferrer" aria-label="Open the motivation figure at full resolution">
-                    <img src="assets/mida/motivation.webp" width="1990" height="817" alt="RGB and thermal reconstructions of a glass cup from VGGT, SEAR, DarkVGGT, and MIDA, alongside their alignment and supervision strategies." decoding="async">
-                </a>
-                <figcaption><strong>Motivation.</strong> Different structural responses can make background and surface cues ambiguous during fusion. MIDA introduces discriminative RGB-T alignment with mutual information-guided feature supervision.</figcaption>
-            </figure>
-        </section>
-
-        <section class="glass-card" id="method" aria-labelledby="method-title">
-            <h2 id="method-title"><span class="section-index">04</span>Methodology</h2>
-            <p>MIDA selects useful cross-modal information at two scales and supervises this selection at the feature level. The RGB and thermal branches estimate their own geometry from paired or unpaired views of the same scene.</p>
-            <figure class="paper-figure">
-                <a class="figure-link" href="assets/mida/framework.webp" target="_blank" rel="noreferrer" aria-label="Open the MIDA framework figure at full resolution">
-                    <img src="assets/mida/framework.webp" width="1610" height="718" alt="MIDA framework with coarse-region alignment, fine-mask alignment, useful and interfering information branches, LoRA feature aggregation, and separate RGB and thermal heads." loading="lazy" decoding="async">
-                </a>
-                <figcaption><strong>Overview of MIDA.</strong> Region-level exchange is followed by token-level refinement. Bidirectional mutual information supervision guides the selection of useful cues for RGB and thermal reconstruction.</figcaption>
-            </figure>
-            <div class="method-grid">
-                <div class="method-step">
-                    <span class="step-label">01 / CRD-A</span>
-                    <h3>Coarse-Region Discriminative Alignment</h3>
-                    <p>Learnable region tokens aggregate context across views within each modality. Mask-gated cross-attention selectively exchanges regional information, which is then redistributed to content tokens.</p>
-                </div>
-                <div class="method-step">
-                    <span class="step-label">02 / FMD-A</span>
-                    <h3>Fine-Mask Discriminative Alignment</h3>
-                    <p>Independent mask heads refine attention at the token level, separating useful surface cues from interfering local responses within the coarsely aligned features.</p>
-                </div>
-                <div class="method-step">
-                    <span class="step-label">03 / MI OBJECTIVE</span>
-                    <h3>Task-Relevant Feature Supervision</h3>
-                    <p>The mutual information objective separates useful and interfering components, encourages shared useful information across modalities, and preserves geometric cues through feature aggregation.</p>
-                </div>
-            </div>
-            <div class="objective">
-                <p class="equation">ℒ<sub>total</sub> = ℒ<sub>geometry</sub> + β (ℒ<sub>MI</sub><sup>RGB→Thermal</sup> + ℒ<sub>MI</sub><sup>Thermal→RGB</sup>)</p>
-                <p>Camera pose and depth losses supervise geometry. The bidirectional mutual information objective guides which cross-modal information is retained.</p>
+                <p>The disparity in how the same object's material appears in the RGB and thermal views leads to <strong class="abstract-problem">conflicting depth estimates</strong> between the two modalities. These cross-modal depth conflicts present a challenge for feed-forward RGB–thermal (RGB-T) 3D reconstruction. Existing methods rely on RGB-T feature consistency alignment based on geometric loss supervision. However, these alignment mechanisms and loss functions do not explicitly model or supervise cross-modal depth conflicts, which limits their ability to distinguish useful task-relevant information from interfering information in each modality's reconstruction task. In other worlds, not all cross-modal information is equally useful for each modality's reconstruction.</p>
+                <p>Fortunately, <strong class="abstract-method">mutual information</strong> quantifies statistical dependence between variables, providing a theoretical basis for selecting information relevant to reconstruction. Inspired by this theory, our core idea is to decompose cross-modal information into useful task-relevant information and interfering information under mutual information supervision, while retaining the former and suppressing the latter.</p>
+                <p>To implement the core idea, we propose <strong class="abstract-method">MIDA</strong> (Mutual Information-Guided RGB-Thermal Discriminative Alignment), mainly consisting of the <em class="abstract-method">coarse-to-fine discriminative alignment</em> and <em class="abstract-method">mutual information-guided RGB-T objective</em>. Specifically, coarse-to-fine discriminative alignment uses learnable region tokens to aggregate regional context for selective cross-modal feature, then applies token-level masks to retain task-relevant information and suppress local interference. Along with geometric loss supervision, the mutual information-guided RGB-T objective provides feature-level supervision to retain information relevant to camera pose and depth estimation while reducing statistical dependence between task-relevant and interfering components, without requiring explicit annotations of these components.
+                    Experiments show that MIDA sets a <strong class="abstract-task">new state of the art</strong> on four RGB-T 3D reconstruction benchmarks.</p>
             </div>
         </section>
 
         <section class="glass-card" id="qualitative" aria-labelledby="qualitative-title">
-            <h2 id="qualitative-title"><span class="section-index">05</span>Reconstruction Results</h2>
-            <p>Qualitative comparisons show the RGB and thermal appearance of reconstructed geometry, including challenging object boundaries and thin structures.</p>
-            <figure class="paper-figure">
-                <a class="figure-link" href="assets/mida/reconstruction.webp" target="_blank" rel="noreferrer" aria-label="Open the reconstruction comparison at full resolution">
-                    <img src="assets/mida/reconstruction.webp" width="2400" height="1063" alt="Seven-method comparison of 3D reconstruction: Depth Anything V3, LingBot-Map, VGGT, VGGT-Ω, SEAR, DarkVGGT, and MIDA. Enlarged regions show local thermal structure." loading="lazy" decoding="async">
-                </a>
-                <figcaption><strong>Qualitative comparison.</strong> RGB and thermal appearances are shown on opposite sides of each diagonal. Red boxes indicate regions enlarged below. The final column, labeled “Ours,” shows MIDA.</figcaption>
-            </figure>
+            <h2 id="qualitative-title"><span class="section-index">03</span>Reconstruction Results</h2>
+            <div class="result-toolbar">
+                <label class="scene-picker">Scene
+                    <select id="result-scene" aria-controls="result-table">
+                        <option value="heater">Heater</option>
+                        <option value="engine">Engine</option>
+                        <option value="generator">Generator</option>
+                        <option value="laptop">Laptop</option>
+                        <option value="pyrex">Pyrex</option>
+                        <option value="sink">Sink</option>
+                        <option value="trace">Trace</option>
+                    </select>
+                </label>
+                <div class="method-pager" aria-label="Comparison methods">
+                    <button type="button" id="methods-prev" aria-label="Previous methods" aria-controls="result-table">←</button>
+                    <span id="method-range" aria-live="polite"></span>
+                    <button type="button" id="methods-next" aria-label="Next methods" aria-controls="result-table">→</button>
+                </div>
+            </div>
+            <div class="result-comparison">
+                <table id="result-table">
+                    <thead>
+                        <tr>
+                            <th scope="col">Modality</th>
+                            <th scope="col">LingBot-Map</th>
+                            <th scope="col">VGGT-omega</th>
+                            <th scope="col">VGGT</th>
+                            <th scope="col">SEAR</th>
+                            <th scope="col">DarkVGGT</th>
+                            <th scope="col" data-file="ours">Ours</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr><th scope="row">RGB</th></tr>
+                        <tr><th scope="row">Thermal</th></tr>
+                    </tbody>
+                </table>
+            </div>
+            <script src="assets/js/reconstruction.js" defer></script>
         </section>
     </main>
 

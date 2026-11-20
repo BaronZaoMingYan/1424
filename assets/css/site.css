@@ -452,10 +452,54 @@ h2 { margin-top: 0; }
 h3 { font-size: 1.1rem; color: var(--text-main); line-height: 1.5; }
 p:last-child { margin-bottom: 0; }
 .abstract-content p { font-size: 1.08rem; }
+.abstract-content .abstract-problem { color: #ffbc96; }
+.abstract-content .abstract-method { color: #79e7ef; font-weight: 650; }
+.abstract-content .abstract-task { color: #c6b4ff; }
 .highlight-term { display: inline; }
 .feature-icon { flex-shrink: 0; font: 700 .78rem 'Inter', sans-serif; }
 .feature-desc { line-height: 1.6; }
 .paper-figure { margin: 28px 0 0; }
+.result-toolbar, .method-pager, .scene-picker {
+    display: flex;
+    align-items: center;
+    gap: .75rem;
+}
+.result-toolbar { justify-content: space-between; flex-wrap: wrap; }
+.result-toolbar { padding: 1rem 0; border-block: 1px solid var(--glass-border); }
+.scene-picker { color: var(--text-muted); font-weight: 600; font-size: .9rem; }
+.result-toolbar select, .method-pager button {
+    border: 1px solid #475668;
+    border-radius: 8px;
+    padding: .5rem .75rem;
+    background: #181f29;
+    color: var(--text-main);
+    font: inherit;
+    cursor: pointer;
+}
+.method-pager button { min-width: 2.6rem; font-size: 1.1rem; }
+.method-pager button:disabled { opacity: .35; cursor: default; }
+#method-range { font-size: .84rem; color: var(--text-muted); font-variant-numeric: tabular-nums; }
+.result-comparison { margin-top: .75rem; }
+#result-table { width: 100%; table-layout: fixed; border-spacing: .5rem; }
+#result-table th { font-size: 1rem; padding: .4rem 0; }
+#result-table th:first-child { width: 4.25rem; text-align: left; font-size: .86rem; color: var(--text-muted); }
+#result-table th[data-file="ours"] { color: var(--accent-primary); }
+#result-table td { padding: 0; }
+#result-table img {
+    display: block;
+    width: 100%;
+    aspect-ratio: 6 / 5;
+    object-fit: contain;
+    background: #0b0e13;
+    border: 1px solid #354151;
+    border-radius: 10px;
+}
+@media (max-width: 680px) {
+    #result-table { border-spacing: .25rem; }
+    #result-table th:first-child { width: 3.55rem; font-size: .78rem; }
+    .result-toolbar { gap: .6rem; }
+    .method-pager { gap: .4rem; }
+}
 .figure-link { display: block; background: white; border-radius: 12px; border: 1px solid var(--glass-border); overflow: hidden; }
 .figure-link img { width: 100%; height: auto; display: block; }
 .figure-link:hover { box-shadow: var(--glow-shadow); }
